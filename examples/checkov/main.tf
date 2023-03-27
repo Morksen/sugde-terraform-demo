@@ -36,15 +36,36 @@ provider "azurerm" {
   }
 }
 
+variable "location" {
+  default = "westeurope"
+}
+
 resource "random_pet" "random" {
 
 }
 
-resource "azurerm_resource_group" "name" {
-  name = "mpa-sugde-${random_pet.random}"
+resource "azurerm_resource_group" "rg" {
+  name     = "mpa-sugde-${random_pet.random.id}"
+  location = var.location
 }
 
 resource "azurerm_storage_account" "storage" {
   #checkov:skip=CKV_AZURE_59:Ensure that Storage accounts disallow public access
-  name = substr(replace(lower("mpasugde${random_pet.random}"), "/[^a-z0-9]/", ""), 0, 24)
+  name                     = substr(replace(lower("mpasugde${random_pet.random.id}"), "/[^a-z0-9]/", ""), 0, 24)
+  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = azurerm_resource_group.rg.name
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+
+  depends_on = [
+    azurerm_resource_group.rg
+  ]
+}
+
+output "rgname" {
+  value = azurerm_resource_group.rg.name
+}
+
+output "saname" {
+  value = azurerm_storage_account.storage.name
 }
