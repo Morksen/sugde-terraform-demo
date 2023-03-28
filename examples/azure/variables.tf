@@ -10,4 +10,5 @@ variable "project_name" {
 
 variable "tags" {
   description = "Additional tags to add to created resources"
+  default     = {}
 }
