@@ -1,6 +1,7 @@
 # sugde-terraform-demo
 
-##Terraform commands
+## Terraform commands
+
 `terraform init --backend-config=<path to tfbackend file>`
 `terraform workspace list`
 `terraform workspace select <name>`
@@ -9,5 +10,9 @@
 ## Checkov commands
 
 `checkov -d <directory>`
-`docker pull bridgecrew/checkov`
-`docker run --rm --volume <directory>:/tf --workdir /tf bridgecrew checkov --directory /tf`
+
+```powershell
+docker pull bridgecrew/checkov
+$path = Resolve-Path .\examples\checkov\
+docker run --rm --volume ${path}:/tf --workdir /tf bridgecrew/checkov --directory /tf
+```
