@@ -46,6 +46,15 @@ resource "azurerm_storage_container" "httplogs_container" {
   storage_account_name  = azurerm_storage_account.main.name
 }
 
+# resource "azurerm_storage_account" "demo" {
+#   name                     = substr(replace("${local.base_name}demosa", "/[^a-z0-9]+/", ""), 0, 24)
+#   location                 = azurerm_resource_group.main.location
+#   resource_group_name      = azurerm_resource_group.main.name
+#   tags                     = local.tags
+#   account_tier             = ("${terraform.workspace}" == "default") ? "Premium" : "Standard"
+#   account_replication_type = ("${terraform.workspace}" == "default") ? "ZRS" : "LRS"
+# }
+
 resource "azurerm_log_analytics_workspace" "main" {
   name                = "${local.base_name}-main-laws"
   location            = azurerm_resource_group.main.location
@@ -98,10 +107,11 @@ resource "azurerm_linux_web_app" "demo" {
       docker_image     = "registry.hub.docker.com/nginxdemos/hello"
       docker_image_tag = "latest"
     }
-    ftps_state    = "FtpsOnly" #"Disabled"
-    http2_enabled = true
-
+    ftps_state        = "FtpsOnly" #"Disabled"
+    http2_enabled     = true
+    health_check_path = "/status"
     auto_heal_enabled = true
+
     auto_heal_setting {
 
     }
