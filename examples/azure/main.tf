@@ -21,7 +21,7 @@ resource "azurerm_storage_account" "main" {
   resource_group_name      = azurerm_resource_group.main.name
   tags                     = local.tags
   account_tier             = ("${terraform.workspace}" == "default") ? "Premium" : "Standard"
-  account_replication_type = ("${terraform.workspace}" == "default") ? "GRS" : "LRS"
+  account_replication_type = ("${terraform.workspace}" == "default") ? "ZRS" : "LRS"
 }
 
 resource "azurerm_storage_container" "walogs_container" {
