@@ -29,9 +29,10 @@ resource "azurerm_storage_account" "main" {
   name                     = substr(replace("${local.base_name}mainsa", "/[^a-z0-9]+/", ""), 0, 24)
   location                 = azurerm_resource_group.main.location
   resource_group_name      = azurerm_resource_group.main.name
-  tags                     = local.tags
   account_tier             = ("${terraform.workspace}" == "default") ? "Premium" : "Standard"
   account_replication_type = ("${terraform.workspace}" == "default") ? "ZRS" : "LRS"
+  tags                     = local.tags
+  #tags                    = merge(local.tags, { echo = "Hello from SUGDE" })
 }
 
 resource "azurerm_storage_container" "walogs_container" {
@@ -52,7 +53,7 @@ resource "azurerm_storage_container" "httplogs_container" {
 #   resource_group_name      = azurerm_resource_group.main.name
 #   tags                     = local.tags
 #   account_tier             = ("${terraform.workspace}" == "default") ? "Premium" : "Standard"
-#   account_replication_type = ("${terraform.workspace}" == "default") ? "ZRS" : "LRS"
+#   account_replication_type = ("${terraform.workspace}" == "default") ? "ZRS" : "LRS" # GRS
 # }
 
 resource "azurerm_log_analytics_workspace" "main" {
