@@ -27,3 +27,7 @@ output "app_service_plan_sku" {
   description = "The name of the created service plan"
   value       = azurerm_service_plan.demo.sku_name
 }
+
+output "workspace" {
+  value = terraform.workspace
+}
