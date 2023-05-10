@@ -12,5 +12,6 @@
   },
   "[terraform-vars]": {
     "editor.tabSize": 2 // optionally
-  }
+  },
+  "sarif-viewer.connectToGithubCodeScanning": "off"
 }
