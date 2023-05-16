@@ -1,0 +1,7 @@
+formatter: 'markdown'
+
+recursive:
+  enabled: false
+
+output:
+  file: 'README.md'

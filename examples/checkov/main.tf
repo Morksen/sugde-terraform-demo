@@ -17,7 +17,7 @@ terraform {
     resource_group_name  = ""
     storage_account_name = ""
     container_name       = ""
-    key                  = "checkov.tfstate"
+    key                  = "checkov-example.tfstate"
   }
 }
 
